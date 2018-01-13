@@ -1,4 +1,4 @@
-<?php namespace PhilippBaschke\ACFProInstaller;
+<?php namespace PhilippBaschke\WPMDBProInstaller;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\OperationInterface;
@@ -10,7 +10,7 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PreFileDownloadEvent;
 use Dotenv\Dotenv;
-use PhilippBaschke\ACFProInstaller\Exceptions\MissingKeyException;
+use PhilippBaschke\WPMDBProInstaller\Exceptions\MissingKeyException;
 
 /**
  * A composer plugin that makes installing ACF PRO possible
@@ -219,7 +219,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @access protected
      * @return string The key from the environment
-     * @throws PhilippBaschke\ACFProInstaller\Exceptions\MissingKeyException
+     * @throws PhilippBaschke\WPMDBProInstaller\Exceptions\MissingKeyException
      */
     protected function getKeyFromEnv()
     {

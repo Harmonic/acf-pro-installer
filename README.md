@@ -1,15 +1,15 @@
-# ACF PRO Installer
+# WP Migrate DB PRO Installer
 
-[![Packagist](https://img.shields.io/packagist/v/philippbaschke/acf-pro-installer.svg?maxAge=3600)](https://packagist.org/packages/philippbaschke/acf-pro-installer)
-[![Packagist](https://img.shields.io/packagist/l/philippbaschke/acf-pro-installer.svg?maxAge=2592000)](https://github.com/PhilippBaschke/acf-pro-installer/blob/master/LICENSE)
-[![Travis](https://img.shields.io/travis/PhilippBaschke/acf-pro-installer.svg?maxAge=3600)](https://travis-ci.org/PhilippBaschke/acf-pro-installer)
-[![Coveralls](https://img.shields.io/coveralls/PhilippBaschke/acf-pro-installer.svg?maxAge=3600)](https://coveralls.io/github/PhilippBaschke/acf-pro-installer)
+[![Packagist](https://img.shields.io/packagist/v/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://packagist.org/packages/Harmonic/acf-pro-installer)
+[![Packagist](https://img.shields.io/packagist/l/Harmonic/acf-pro-installer.svg?maxAge=2592000)](https://github.com/Harmonic/acf-pro-installer/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://travis-ci.org/Harmonic/acf-pro-installer)
+[![Coveralls](https://img.shields.io/coveralls/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://coveralls.io/github/Harmonic/acf-pro-installer)
 
-A composer plugin that makes installing [ACF PRO] with [composer] easier. 
+A composer plugin that makes installing [WP Migrate DB Pro] with [composer] easier. 
 
-It reads your :key: ACF PRO key from the **environment** or a **.env file**.
+It reads your :key: WP Migrate DB Pro key from the **environment** or a **.env file**.
 
-[ACF PRO]: https://www.advancedcustomfields.com/pro/
+[WP Migrate DB Pro]: https://deliciousbrains.com/wp-migrate-db-pro
 [composer]: https://github.com/composer/composer
 
 ## Usage
@@ -21,15 +21,15 @@ It reads your :key: ACF PRO key from the **environment** or a **.env file**.
 {
   "type": "package",
   "package": {
-    "name": "advanced-custom-fields/advanced-custom-fields-pro",
+    "name": "deliciousbrains/wp-migrate-db-pro",
     "version": "*.*.*(.*)",
     "type": "wordpress-plugin",
     "dist": {
       "type": "zip",
-      "url": "https://connect.advancedcustomfields.com/index.php?p=pro&a=download"
+      "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-cli-latest.zip?"
     },
     "require": {
-      "philippbaschke/acf-pro-installer": "^1.0",
+      "harmonic/wp-migrate-db-pro": "^1.0",
       "composer/installers": "^1.0"
     }
   }

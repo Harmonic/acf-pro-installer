@@ -1,4 +1,4 @@
-<?php namespace PhilippBaschke\ACFProInstaller\Exceptions;
+<?php namespace PhilippBaschke\WPMDBProInstaller\Exceptions;
 
 /**
  * Exception thrown if the ACF PRO key is not available in the environment
