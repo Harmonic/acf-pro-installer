@@ -11,6 +11,7 @@ use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PreFileDownloadEvent;
 use Dotenv\Dotenv;
 use Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException;
+use Harmonic\WPMDBProInstaller\Exceptions\MissingSiteUrlException;
 
 /**
  * A composer plugin that makes installing ACF PRO possible
@@ -250,13 +251,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function getSiteUrlFromEnv()
     {
         $this->loadDotEnv();
-        $key = getenv(self::SITE_ENV_VARIABLE);
+        $url = getenv(self::SITE_ENV_VARIABLE);
 
-        if (!$key) {
+        if (!$url) {
             throw new MissingSiteUrlException(self::SITE_ENV_VARIABLE);
         }
 
-        return $key;
+        return $url;
     }
 
     /**

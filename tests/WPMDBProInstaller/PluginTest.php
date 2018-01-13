@@ -6,12 +6,11 @@ use Harmonic\WPMDBProInstaller\Plugin;
 
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
-    const REPO_NAME = 'advanced-custom-fields/advanced-custom-fields-pro';
+    const REPO_NAME = 'deliciousbrains/wp-migrate-db-pro';
     const REPO_TYPE = 'wordpress-plugin';
-    const REPO_URL =
-      'https://connect.advancedcustomfields.com/index.php?p=pro&a=download';
-    const WP_MIGRATE_DB_PRO_KEY = 'ACF_PRO_KEY';
-    const APP_URL = 'test.com';
+    const REPO_URL = 'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip?';
+    const WP_MIGRATE_DB_PRO_KEY = 'WP_MIGRATE_DB_PRO_KEY';
+    const APP_URL = 'APP_URL';
 
     protected function tearDown()
     {
@@ -87,7 +86,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
         // Make key and url available in the ENVIRONMENT   
         putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
-        putenv(self::APP_URL . '=test.com');         putenv(self::APP_URL . '=test.com');
+        putenv(self::APP_URL . '=test.com');
 
         // Mock a Package
         $package = $this
@@ -777,7 +776,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&k=$key",
+                        "&licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
@@ -867,7 +866,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&k=$key",
+                        "&licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
@@ -961,7 +960,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&k=$key",
+                        "&licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
@@ -980,7 +979,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // Expect an Exception
         $this->setExpectedException(
             'Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException',
-            'ACF_PRO_KEY'
+            'WP_MIGRATE_DB_PRO_KEY'
         );
 
         // Mock a RemoteFilesystem
