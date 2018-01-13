@@ -39,21 +39,22 @@ Replace `"version": "*.*.*(.*)"` with your desired version.
 
 Replace `"type": "wordpress-plugin"` with `"type": "library"` if you would like to have ACF PRO installed in the `./vendor` directory instead of `./wp-content/plugins`. This may be desireable if for example, you are including ACF PRO in a WordPress theme.
 
-**2. Make your ACF PRO key available**
+**2. Make your WP MIGRATE DB PRO PRO key available**
 
-Set the environment variable **`ACF_PRO_KEY`** to your [ACF PRO key][acf-account].
+Set the environment variable **`WP_MIGRATE_DB_PRO_KEY`** to your [WP Migrate DB Pro PRO key][acf-account].
 
 Alternatively you can add an entry to your **`.env`** file:
 
 ```ini
 # .env (same directory as composer.json)
-ACF_PRO_KEY=Your-Key-Here
+WP_MIGRATE_DB_PRO_KEY=Your-Key-Here
+APP_URL=site.com
 ```
 
-**3. Require ACF PRO**
+**3. Require WP Migrate DB Pro PRO**
 
 ```sh
-composer require advanced-custom-fields/advanced-custom-fields-pro:*
+composer require deliciousbrains/wp-migrate-db-pro:*
 ```
 You can specify an [exact version][composer-versions] (that matches your desired version).
 
@@ -64,4 +65,4 @@ If you use **`*`**, composer will install the version from the package repositor
 [composer-repositories]: https://getcomposer.org/doc/04-schema.md#repositories
 [composer-versions]: https://getcomposer.org/doc/articles/versions.md
 [package-gist]: https://gist.github.com/fThues/705da4c6574a4441b488
-[acf-account]: https://www.advancedcustomfields.com/my-account/
+[acf-account]: https://deliciousbrains.com/my-account/

@@ -1,4 +1,4 @@
-<?php namespace PhilippBaschke\WPMDBProInstaller;
+<?php namespace Harmonic\WPMDBProInstaller;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\OperationInterface;
@@ -10,7 +10,7 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Plugin\PreFileDownloadEvent;
 use Dotenv\Dotenv;
-use PhilippBaschke\WPMDBProInstaller\Exceptions\MissingKeyException;
+use Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException;
 
 /**
  * A composer plugin that makes installing ACF PRO possible
@@ -31,19 +31,20 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * The name of the environment variable
      * where the ACF PRO key should be stored.
      */
-    const KEY_ENV_VARIABLE = 'ACF_PRO_KEY';
+    const KEY_ENV_VARIABLE = 'WP_MIGRATE_DB_PRO_KEY';
+    const SITE_ENV_VARIABLE = 'APP_URL';
 
     /**
      * The name of the ACF PRO package
      */
     const ACF_PRO_PACKAGE_NAME =
-    'advanced-custom-fields/advanced-custom-fields-pro';
+    'deliciousbrains/wp-migrate-db-pro';
 
     /**
      * The url where ACF PRO can be downloaded (without version and key)
      */
     const ACF_PRO_PACKAGE_URL =
-    'https://connect.advancedcustomfields.com/index.php?p=pro&a=download';
+    'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip?';
 
     /**
      * @access protected
@@ -61,7 +62,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * The function that is called when the plugin is activated
      *
      * Makes composer and io available because they are needed
-     * in the addKey method.
+     * in the addParams method.
      *
      * @access public
      * @param Composer $composer The composer object
@@ -90,7 +91,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         return [
             PackageEvents::PRE_PACKAGE_INSTALL => 'addVersion',
             PackageEvents::PRE_PACKAGE_UPDATE => 'addVersion',
-            PluginEvents::PRE_FILE_DOWNLOAD => 'addKey'
+            PluginEvents::PRE_FILE_DOWNLOAD => 'addParams'
         ];
     }
 
@@ -131,18 +132,26 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @param PreFileDownloadEvent $event The event that called this method
      * @throws MissingKeyException
      */
-    public function addKey(PreFileDownloadEvent $event)
+    public function addParams(PreFileDownloadEvent $event)
     {
         $processedUrl = $event->getProcessedUrl();
 
         if ($this->isAcfProPackageUrl($processedUrl)) {
             $rfs = $event->getRemoteFilesystem();
+            
+            $url = $this->addParameterToUrl(
+                $processedUrl,
+                'licence_key',
+                $this->getKeyFromEnv()
+            );
+            $url = $this->addParameterToUrl(
+                $url,
+                'site_url',
+                $this->getSiteUrlFromEnv()
+            );
+            
             $acfRfs = new RemoteFilesystem(
-                $this->addParameterToUrl(
-                    $processedUrl,
-                    'k',
-                    $this->getKeyFromEnv()
-                ),
+                $url,
                 $this->io,
                 $this->composer->getConfig(),
                 $rfs->getOptions(),
@@ -219,7 +228,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @access protected
      * @return string The key from the environment
-     * @throws PhilippBaschke\WPMDBProInstaller\Exceptions\MissingKeyException
+     * @throws Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException
      */
     protected function getKeyFromEnv()
     {
@@ -228,6 +237,23 @@ class Plugin implements PluginInterface, EventSubscriberInterface
 
         if (!$key) {
             throw new MissingKeyException(self::KEY_ENV_VARIABLE);
+        }
+
+        return $key;
+    }
+
+    /**
+     * Get the site URL from the environment
+     *
+     * @return void
+     */
+    protected function getSiteUrlFromEnv()
+    {
+        $this->loadDotEnv();
+        $key = getenv(self::SITE_ENV_VARIABLE);
+
+        if (!$key) {
+            throw new MissingSiteUrlException(self::SITE_ENV_VARIABLE);
         }
 
         return $key;

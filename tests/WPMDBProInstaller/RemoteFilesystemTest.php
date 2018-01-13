@@ -1,6 +1,6 @@
-<?php namespace PhilippBaschke\ACFProInstaller\Test;
+<?php namespace Harmonic\ACFProInstaller\Test;
 
-use PhilippBaschke\ACFProInstaller\RemoteFilesystem;
+use Harmonic\ACFProInstaller\RemoteFilesystem;
 
 class RemoteFilesystemTest extends \PHPUnit_Framework_TestCase
 {

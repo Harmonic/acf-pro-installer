@@ -1,8 +1,8 @@
-<?php namespace PhilippBaschke\ACFProInstaller\Test;
+<?php namespace Harmonic\WPMDBProInstaller\Test;
 
 use Composer\Installer\PackageEvents;
 use Composer\Plugin\PluginEvents;
-use PhilippBaschke\ACFProInstaller\Plugin;
+use Harmonic\WPMDBProInstaller\Plugin;
 
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,13 +10,14 @@ class PluginTest extends \PHPUnit_Framework_TestCase
     const REPO_TYPE = 'wordpress-plugin';
     const REPO_URL =
       'https://connect.advancedcustomfields.com/index.php?p=pro&a=download';
-    const KEY_ENV_VARIABLE = 'ACF_PRO_KEY';
+    const WP_MIGRATE_DB_PRO_KEY = 'ACF_PRO_KEY';
+    const APP_URL = 'test.com';
 
     protected function tearDown()
     {
         // Unset the environment variable after every test
         // See: http://stackoverflow.com/a/34065522
-        putenv(self::KEY_ENV_VARIABLE);
+        putenv(self::WP_MIGRATE_DB_PRO_KEY);
 
         // Delete the .env file
         $dotenv = getcwd().DIRECTORY_SEPARATOR.'.env';
@@ -75,7 +76,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $subscribedEvents = Plugin::getSubscribedEvents();
         $this->assertEquals(
             $subscribedEvents[PluginEvents::PRE_FILE_DOWNLOAD],
-            'addKey'
+            'addParams'
         );
     }
 
@@ -84,8 +85,9 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // The version that should be required
         $version = '1.2.3';
 
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT   
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');         putenv(self::APP_URL . '=test.com');
 
         // Mock a Package
         $package = $this
@@ -159,8 +161,9 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // The version that should be required
         $version = '1.2.3';
 
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT       
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');
 
         // Mock a Package
         $package = $this
@@ -231,8 +234,9 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     public function testDontAddVersionOnOtherPackages()
     {
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');   
 
         // Mock a Package
         $package = $this
@@ -300,8 +304,10 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     protected function versionPassesValidationHelper($version)
     {
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+         
+        // Make key and url available in the ENVIRONMENT               
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');
 
         // Mock a Package
         $package = $this
@@ -464,8 +470,9 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // The version that should be required
         $version = '1.2.3';
 
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT                 
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');
 
         // Mock a Package
         $package = $this
@@ -539,8 +546,9 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // The version that should be required
         $version = '1.2.3';
 
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT         
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');         
 
         // Mock a Package
         $package = $this
@@ -609,10 +617,11 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $plugin->addVersion($packageEvent);
     }
 
-    public function testAddKeyCreatesCustomFilesystemWithOldValues()
+    public function testaddParamsCreatesCustomFilesystemWithOldValues()
     {
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT       
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');
 
         // Mock a RemoteFilesystem
         $options = ['options' => 'array'];
@@ -689,19 +698,19 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 }
             ));
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
         $plugin->activate($composer, $io);
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 
-    public function testAddKeyFromENV()
+    public function testaddParamsFromENV()
     {
         // The key that should be available in the ENVIRONMENT
         $key = 'ENV_KEY';
 
         // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=' . $key);
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=' . $key);
 
         // Mock a RemoteFilesystem
         $rfs = $this
@@ -776,13 +785,13 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 }
             ));
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
         $plugin->activate($composer, $io);
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 
-    public function testAddKeyFromDotEnv()
+    public function testaddParamsFromDotEnv()
     {
         // The key that should be available in the .env file
         $key = 'DOT_ENV_KEY';
@@ -790,7 +799,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // Make key available in the .env file
         file_put_contents(
             getcwd().DIRECTORY_SEPARATOR.'.env',
-            self::KEY_ENV_VARIABLE . '=' . $key
+            self::WP_MIGRATE_DB_PRO_KEY . '=' . $key
         );
 
         // Mock a RemoteFilesystem
@@ -866,10 +875,10 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 }
             ));
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
         $plugin->activate($composer, $io);
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 
     public function testPreferKeyFromEnv()
@@ -881,11 +890,11 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // Make key available in the .env file
         file_put_contents(
             getcwd().DIRECTORY_SEPARATOR.'.env',
-            self::KEY_ENV_VARIABLE . '=' . $fileKey
+            self::WP_MIGRATE_DB_PRO_KEY . '=' . $fileKey
         );
 
         // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=' . $key);
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=' . $key);
 
         // Mock a RemoteFilesystem
         $rfs = $this
@@ -960,17 +969,17 @@ class PluginTest extends \PHPUnit_Framework_TestCase
                 }
             ));
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
         $plugin->activate($composer, $io);
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 
     public function testThrowExceptionWhenKeyIsMissing()
     {
         // Expect an Exception
         $this->setExpectedException(
-            'PhilippBaschke\ACFProInstaller\Exceptions\MissingKeyException',
+            'Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException',
             'ACF_PRO_KEY'
         );
 
@@ -1000,15 +1009,16 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->method('getRemoteFilesystem')
             ->willReturn($rfs);
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 
-    public function testOnlyAddKeyOnAcfUrl()
+    public function testOnlyaddParamsOnAcfUrl()
     {
-        // Make key available in the ENVIRONMENT
-        putenv(self::KEY_ENV_VARIABLE . '=KEY');
+        // Make key and url available in the ENVIRONMENT         
+        putenv(self::WP_MIGRATE_DB_PRO_KEY . '=KEY');         
+        putenv(self::APP_URL . '=test.com');         
 
         // Mock an Event
         $event = $this
@@ -1034,8 +1044,8 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->expects($this->never())
             ->method('setRemoteFilesystem');
 
-        // Call addKey
+        // Call addParams
         $plugin = new Plugin();
-        $plugin->addKey($event);
+        $plugin->addParams($event);
     }
 }

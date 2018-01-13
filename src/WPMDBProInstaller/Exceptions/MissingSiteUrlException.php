@@ -3,7 +3,7 @@
 /**
  * Exception thrown if the WP Migrate DB PRO key is not available in the environment
  */
-class MissingKeyException extends \Exception
+class MissingSiteUrlException extends \Exception
 {
     public function __construct(
         $message = '',
@@ -11,7 +11,7 @@ class MissingKeyException extends \Exception
         \Exception $previous = null
     ) {
         parent::__construct(
-            'Could not find a key for WP Migrate DB Pro. ' .
+            'Could not find a site URL for WP Migrate DB Pro. ' .
             'Please make it available via the environment variable ' .
             $message,
             $code,

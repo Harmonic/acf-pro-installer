@@ -1,6 +1,6 @@
-<?php namespace PhilippBaschke\ACFProInstaller\Test\Exceptions;
+<?php namespace Harmonic\ACFProInstaller\Test\Exceptions;
 
-use PhilippBaschke\ACFProInstaller\Exceptions\MissingKeyException;
+use Harmonic\ACFProInstaller\Exceptions\MissingKeyException;
 
 class MissingKeyExceptionTest extends \PHPUnit_Framework_TestCase
 {
