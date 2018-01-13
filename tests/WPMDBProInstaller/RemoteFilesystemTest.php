@@ -1,6 +1,6 @@
-<?php namespace Harmonic\ACFProInstaller\Test;
+<?php namespace Harmonic\WPMDBProInstaller\Test;
 
-use Harmonic\ACFProInstaller\RemoteFilesystem;
+use Harmonic\WPMDBProInstaller\RemoteFilesystem;
 
 class RemoteFilesystemTest extends \PHPUnit_Framework_TestCase
 {

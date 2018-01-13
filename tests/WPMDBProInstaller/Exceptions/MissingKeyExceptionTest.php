@@ -1,6 +1,6 @@
-<?php namespace Harmonic\ACFProInstaller\Test\Exceptions;
+<?php namespace Harmonic\WPMDBProInstaller\Test\Exceptions;
 
-use Harmonic\ACFProInstaller\Exceptions\MissingKeyException;
+use Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException;
 
 class MissingKeyExceptionTest extends \PHPUnit_Framework_TestCase
 {

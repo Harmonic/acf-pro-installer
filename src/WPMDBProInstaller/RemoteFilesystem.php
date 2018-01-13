@@ -1,4 +1,4 @@
-<?php namespace PhilippBaschke\WPMDBProInstaller;
+<?php namespace Harmonic\WPMDBProInstaller;
 
 use Composer\Config;
 use Composer\IO\IOInterface;
