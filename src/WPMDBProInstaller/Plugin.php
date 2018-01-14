@@ -45,7 +45,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * The url where ACF PRO can be downloaded (without version and key)
      */
     const ACF_PRO_PACKAGE_URL =
-    'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip?';
+    'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip';
 
     /**
      * @access protected

@@ -8,7 +8,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 {
     const REPO_NAME = 'deliciousbrains/wp-migrate-db-pro';
     const REPO_TYPE = 'wordpress-plugin';
-    const REPO_URL = 'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip?';
+    const REPO_URL = 'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip';
     const WP_MIGRATE_DB_PRO_KEY = 'WP_MIGRATE_DB_PRO_KEY';
     const APP_URL = 'APP_URL';
 
@@ -776,7 +776,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&licence_key=$key",
+                        "licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
@@ -866,7 +866,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&licence_key=$key",
+                        "licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
@@ -960,7 +960,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
             ->with($this->callback(
                 function ($rfs) use ($key) {
                     $this->assertAttributeContains(
-                        "&licence_key=$key",
+                        "licence_key=$key",
                         'acfFileUrl',
                         $rfs
                     );
