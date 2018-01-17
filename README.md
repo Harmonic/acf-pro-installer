@@ -14,6 +14,10 @@ It reads your :key: WP Migrate DB Pro key and site URL from the **environment** 
 
 ```json
 {
+  "type": "vcs",
+  "url": "https://github.com/harmonic/wp-migrate-db-pro-installer"
+},
+{
   "type": "package",
   "package": {
     "name": "deliciousbrains/wp-migrate-db-pro",
