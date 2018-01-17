@@ -187,7 +187,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * @param String $version The version provided by composer.json
      * @return String The URL based on original request and version supplied
      */
-    protected function urlManager(String $url, String $version) {
+    public function urlManager(String $url, String $version) { //TODO: Make this protected and alter tests
 
         $processed_url = "https://deliciousbrains.com/dl/";
 
@@ -281,12 +281,12 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @return void
      */
-    protected function getSiteUrlFromEnv()
+    public function getSiteUrlFromEnv() //TODO: Make this protected and alter tests
     {
         $this->loadDotEnv();
         $url = getenv(self::SITE_ENV_VARIABLE);
 
-        if (!$url) {
+        if (empty($url)) {
             throw new MissingSiteUrlException(self::SITE_ENV_VARIABLE);
         }
 

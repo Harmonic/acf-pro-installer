@@ -112,12 +112,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $package
             ->expects($this->once())
             ->method('getDistUrl')
-            ->willReturn(self::REPO_URL);
+            ->willReturn(str_replace("latest", $version, self::REPO_URL));
 
         $package
             ->expects($this->once())
             ->method('setDistUrl')
-            ->with(self::REPO_URL . "&t=$version");
+            ->with(str_replace("latest", $version, self::REPO_URL));
 
         // Mock an Operation
         $operationClass =
@@ -193,7 +193,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $package
             ->expects($this->once())
             ->method('setDistUrl')
-            ->with(self::REPO_URL . "&t=$version");
+            ->with(str_replace("latest", $version, self::REPO_URL));
 
         // Mock an Operation
         $operationClass =
@@ -497,12 +497,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $package
             ->expects($this->once())
             ->method('getDistUrl')
-            ->willReturn(self::REPO_URL . '&t=' . $version);
+            ->willReturn(str_replace("latest", $version, self::REPO_URL));
 
         $package
             ->expects($this->once())
             ->method('setDistUrl')
-            ->with(self::REPO_URL . "&t=$version");
+            ->with(str_replace("latest", $version, self::REPO_URL));
 
         // Mock an Operation
         $operationClass =
@@ -573,12 +573,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $package
             ->expects($this->once())
             ->method('getDistUrl')
-            ->willReturn(self::REPO_URL . '&t=' . $version . '.4');
+            ->willReturn(str_replace("latest", $version, self::REPO_URL));
 
         $package
             ->expects($this->once())
             ->method('setDistUrl')
-            ->with(self::REPO_URL . "&t=$version");
+            ->with(str_replace("latest", $version, self::REPO_URL));
 
         // Mock an Operation
         $operationClass =
@@ -1047,9 +1047,57 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $plugin = new Plugin();
         $plugin->addParams($event);
     }
+    
+    public function testUrlManager() {
+        // urlManager(String $url, String $version)
+        $plugin = new Plugin();
 
-    //TODO: Add test for stripping http:// and https:// from URL parameter
-    //TODO: Add test for missing url exception
-    //TODO: Modify addVersion test
-    //TODO: Add test for urlManager function
+        $prefix = "https://deliciousbrains.com/dl/";
+
+        $url1 = "wp-migrate-db-pro-media-files";
+        $url2 = "wp-migrate-db-pro-cli";
+        $url3 = "wp-migrate-db-pro";
+
+        $version = "*";
+        $url = $plugin->urlManager($prefix . $url1, $version);
+        $this->assertEquals($url,$prefix.$url1."-latest.zip");
+        $url = $plugin->urlManager($prefix . $url2, $version);
+        $this->assertEquals($url,$prefix.$url2."-latest.zip");
+        $url = $plugin->urlManager($prefix . $url3, $version);
+        $this->assertEquals($url,$prefix.$url3."-latest.zip");
+
+        $version = "1.8.1";
+        $url = $plugin->urlManager($prefix . $url1, $version);
+        $this->assertEquals($url,$prefix.$url1."-1.8.1.zip");
+        $url = $plugin->urlManager($prefix . $url2, $version);
+        $this->assertEquals($url,$prefix.$url2."-1.8.1.zip");
+        $url = $plugin->urlManager($prefix . $url3, $version);
+        $this->assertEquals($url,$prefix.$url3."-1.8.1.zip");
+    }
+
+    public function testGetSiteUrlFromEnv() { 
+        $plugin = new Plugin();
+        $prefix_removed_url = "test.com";
+
+        putenv(self::APP_URL);
+
+        // Get exception if doesn't exist
+        $this->expectException(\Harmonic\WPMDBProInstaller\Exceptions\MissingSiteUrlException::class);
+        $plugin->getSiteUrlFromEnv();
+    }
+
+    public function testSiteURLPrefixRemoval() {
+        $plugin = new Plugin();
+        $prefix_removed_url = "test.com";
+
+        // Removes http://
+        putenv(self::APP_URL . '=http://' . $prefix_removed_url);
+        $url = $plugin->getSiteUrlFromEnv();
+        $this->assertEquals($url,$prefix_removed_url);
+
+        // Removes https://
+        putenv(self::APP_URL . '=https://' . $prefix_removed_url);
+        $this->assertEquals($url,$prefix_removed_url);
+    }
+
 }

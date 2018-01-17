@@ -2,7 +2,7 @@
 
 A composer plugin that makes installing [WP Migrate DB Pro] with [composer] easier, based on the amazing work by PhilippBaschke and his [acf-pro-installer] https://github.com/PhilippBaschke/acf-pro-installer
 
-It reads your :key: WP Migrate DB Pro key and site URL from the **environment** or a **.env file**.
+It reads your :key: WP Migrate DB Pro key and site URL from the **environment** or a **.env file** so that you do not need to commit them to source control.
 
 [WP Migrate DB Pro]: https://deliciousbrains.com/wp-migrate-db-pro
 [composer]: https://github.com/composer/composer
@@ -13,10 +13,6 @@ It reads your :key: WP Migrate DB Pro key and site URL from the **environment** 
    (based on this [gist][package-gist]):**
 
 ```json
-{
-  "type": "vcs",
-  "url": "https://github.com/harmonic/wp-migrate-db-pro-installer"
-},
 {
   "type": "package",
   "package": {
@@ -75,7 +71,7 @@ If you also require the media files and cli plugins you can add these as well:
 }
 ```
 
-**2. Make your WP MIGRATE DB PRO PRO key available**
+**2. Make your WP MIGRATE DB PRO key available**
 
 Set the environment variable **`WP_MIGRATE_DB_PRO_KEY`** to your [WP Migrate DB Pro PRO key][acf-account].
 Set the environment variable **`APP_URL`** to your website URL. Full URL is accepted so you can also use this variable in your wp-config.php.
