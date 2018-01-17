@@ -42,10 +42,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     'deliciousbrains/wp-migrate-db-pro';
 
     /**
-     * The url where ACF PRO can be downloaded (without version and key)
+     * The url where ACF PRO can be downloaded (without filename, version and key)
      */
     const ACF_PRO_PACKAGE_URL =
-    'https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip';
+    'https://deliciousbrains.com/dl/';
 
     /**
      * @access protected
@@ -265,7 +265,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         } elseif (substr($url, 0, strlen($prefix_s)) == $prefix_s) {
             $url = substr($url, strlen($prefix_s));
         }
-        
+
         return $url;
     }
 
