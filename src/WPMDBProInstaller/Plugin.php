@@ -205,7 +205,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             $version="latest";
         } 
 
-        return $processed_url . $plugin . $version;
+        return $processed_url . $plugin . $version . ".zip";
     }
     
     /**
