@@ -1,15 +1,15 @@
 <?php namespace Harmonic\WPMDBProInstaller\Test\Exceptions;
 
-use Harmonic\WPMDBProInstaller\Exceptions\MissingKeyException;
+use Harmonic\WPMDBProInstaller\Exceptions\MissingSiteUrlException;
 
-class MissingKeyExceptionTest extends \PHPUnit_Framework_TestCase
+class MissingSiteUrlExceptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testMessage()
     {
         $message = 'FIELD';
-        $e = new MissingKeyException($message);
+        $e = new MissingSiteUrlException($message);
         $this->assertEquals(
-            'Could not find a key for WP Migrate DB Pro. ' .
+            'Could not find a site URL for WP Migrate DB Pro. ' .
             'Please make it available via the environment variable ' .
             $message,
             $e->getMessage()

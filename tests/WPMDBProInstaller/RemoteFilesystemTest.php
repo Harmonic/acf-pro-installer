@@ -9,7 +9,7 @@ class RemoteFilesystemTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->io = $this->getMock('Composer\IO\IOInterface');
+        $this->io = $this->createMock('Composer\IO\IOInterface');
     }
 
     public function testExtendsComposerRemoteFilesystem()
