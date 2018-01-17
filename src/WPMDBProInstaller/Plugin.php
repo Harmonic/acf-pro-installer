@@ -257,6 +257,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             throw new MissingSiteUrlException(self::SITE_ENV_VARIABLE);
         }
 
+        // Remove http:// or https:// from APP_URL
+        $prefix = "http://";
+        $prefix_s = "https://";
+        if (substr($url, 0, strlen($prefix)) == $prefix) {
+            $url = substr($url, strlen($prefix));
+        } elseif (substr($url, 0, strlen($prefix_s)) == $prefix_s) {
+            $url = substr($url, strlen($prefix_s));
+        }
+        
         return $url;
     }
 
@@ -278,9 +287,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     /**
      * Add a parameter to the given url
      *
-     * Adds the given parameter at the end of the given url. It only works with
-     * urls that already have parameters (e.g. test.com?p=true) because it
-     * uses & as a separation character.
+     * Adds the given parameter at the end of the given url.
      *
      * @access protected
      * @param string $url The url that should be appended
@@ -291,7 +298,16 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function addParameterToUrl($url, $parameter, $value)
     {
         $cleanUrl = $this->removeParameterFromUrl($url, $parameter);
-        $urlParameter = '&' . $parameter . '=' . urlencode($value);
+        
+        $url = explode( '?', $cleanUrl );
+        if (sizeof($url)>1) {
+            // already have a ?
+            $joiner = "&";
+        } else {
+            $joiner = "?";
+        }
+
+        $urlParameter = $joiner . $parameter . '=' . urlencode($value);
 
         return $cleanUrl .= $urlParameter;
     }

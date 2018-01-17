@@ -1047,4 +1047,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $plugin = new Plugin();
         $plugin->addParams($event);
     }
+
+    //TODO: Add test for stripping http:// and https:// from URL parameter
+    //TODO: Add test for missing url exception
 }
