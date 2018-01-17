@@ -1,13 +1,8 @@
 # WP Migrate DB PRO Installer
 
-[![Packagist](https://img.shields.io/packagist/v/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://packagist.org/packages/Harmonic/acf-pro-installer)
-[![Packagist](https://img.shields.io/packagist/l/Harmonic/acf-pro-installer.svg?maxAge=2592000)](https://github.com/Harmonic/acf-pro-installer/blob/master/LICENSE)
-[![Travis](https://img.shields.io/travis/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://travis-ci.org/Harmonic/acf-pro-installer)
-[![Coveralls](https://img.shields.io/coveralls/Harmonic/acf-pro-installer.svg?maxAge=3600)](https://coveralls.io/github/Harmonic/acf-pro-installer)
+A composer plugin that makes installing [WP Migrate DB Pro] with [composer] easier, based on the amazing work by PhilippBaschke and his [acf-pro-installer] https://github.com/PhilippBaschke/acf-pro-installer
 
-A composer plugin that makes installing [WP Migrate DB Pro] with [composer] easier. 
-
-It reads your :key: WP Migrate DB Pro key from the **environment** or a **.env file**.
+It reads your :key: WP Migrate DB Pro key and site URL from the **environment** or a **.env file**.
 
 [WP Migrate DB Pro]: https://deliciousbrains.com/wp-migrate-db-pro
 [composer]: https://github.com/composer/composer
@@ -26,7 +21,7 @@ It reads your :key: WP Migrate DB Pro key from the **environment** or a **.env f
     "type": "wordpress-plugin",
     "dist": {
       "type": "zip",
-      "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-cli-latest.zip?"
+      "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip"
     },
     "require": {
       "harmonic/wp-migrate-db-pro": "^1.0",
@@ -37,21 +32,59 @@ It reads your :key: WP Migrate DB Pro key from the **environment** or a **.env f
 ```
 Replace `"version": "*.*.*(.*)"` with your desired version.
 
-Replace `"type": "wordpress-plugin"` with `"type": "library"` if you would like to have ACF PRO installed in the `./vendor` directory instead of `./wp-content/plugins`. This may be desireable if for example, you are including ACF PRO in a WordPress theme.
+Replace `"type": "wordpress-plugin"` with `"type": "library"` if you would like to have WP MIGRATE DB PRO installed in the `./vendor` directory instead of `./wp-content/plugins`. This may be desireable if for example, you are including WP MIGRATE DB PRO in a WordPress theme.
+
+If you also require the media files and cli plugins you can add these as well:
+
+```json
+{
+  "type": "package",
+  "package": {
+    "name": "deliciousbrains/wp-migrate-db-pro",
+    "version": "*.*.*(.*)",
+    "type": "wordpress-plugin",
+    "dist": {
+      "type": "zip",
+      "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-media-files-latest.zip"
+    },
+    "require": {
+      "harmonic/wp-migrate-db-pro": "^1.0",
+      "composer/installers": "^1.0"
+    }
+  }
+},
+{
+  "type": "package",
+  "package": {
+    "name": "deliciousbrains/wp-migrate-db-pro",
+    "version": "*.*.*(.*)",
+    "type": "wordpress-plugin",
+    "dist": {
+      "type": "zip",
+      "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-cli-latest.zip"
+    },
+    "require": {
+      "harmonic/wp-migrate-db-pro": "^1.0",
+      "composer/installers": "^1.0"
+    }
+  }
+}
+```
 
 **2. Make your WP MIGRATE DB PRO PRO key available**
 
 Set the environment variable **`WP_MIGRATE_DB_PRO_KEY`** to your [WP Migrate DB Pro PRO key][acf-account].
+Set the environment variable **`APP_URL`** to your website URL. Full URL is accepted so you can also use this variable in your wp-config.php.
 
 Alternatively you can add an entry to your **`.env`** file:
 
 ```ini
 # .env (same directory as composer.json)
 WP_MIGRATE_DB_PRO_KEY=Your-Key-Here
-APP_URL=site.com
+APP_URL=http://site.com
 ```
 
-**3. Require WP Migrate DB Pro PRO**
+**3. Require WP Migrate DB Pro**
 
 ```sh
 composer require deliciousbrains/wp-migrate-db-pro:*
