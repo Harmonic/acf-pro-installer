@@ -116,7 +116,8 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         if ($package->getName() === self::ACF_PRO_PACKAGE_NAME) {
             $version = $this->validateVersion($package->getPrettyVersion());
             $package->setDistUrl(
-                $this->addParameterToUrl($package->getDistUrl(), 't', $version)
+                //$this->addParameterToUrl($package->getDistUrl(), 't', $version)
+                $this->urlManager($package->getDistUrl(), $version)
             );
         }
     }
@@ -180,6 +181,34 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     }
 
     /**
+     * Generate a valid url based on version requested
+     * 
+     * @param String $url The URL provided by composer.json
+     * @param String $version The version provided by composer.json
+     * @return String The URL based on original request and version supplied
+     */
+    protected function urlManager(String $url, String $version) {
+
+        $processed_url = "https://deliciousbrains.com/dl/";
+
+        if (strpos($url, 'wp-migrate-db-pro-media-files') !== false) {
+            $plugin = "wp-migrate-db-pro-media-files-";
+        } elseif (strpos($url, 'wp-migrate-db-pro-cli') !== false) {
+            $plugin = "wp-migrate-db-pro-cli-";
+        } else {
+            // Assume its the overall plugin
+            $plugin = "wp-migrate-db-pro-";
+        }
+
+        if ($version == "*") {
+            // Latest
+            $version="latest";
+        } 
+
+        return $processed_url . $plugin . $version;
+    }
+    
+    /**
      * Validate that the version is an exact major.minor.patch.optional version
      *
      * The url to download the code for the package only works with exact
@@ -192,6 +221,10 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     protected function validateVersion($version)
     {
+        if ($version == "*") {
+            return true;
+        }
+        
         // \A = start of string, \Z = end of string
         // See: http://stackoverflow.com/a/34994075
         $major_minor_patch_optional = '/\A\d\.\d\.\d{1,2}(?:\.\d)?\Z/';

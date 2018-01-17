@@ -1050,4 +1050,6 @@ class PluginTest extends \PHPUnit_Framework_TestCase
 
     //TODO: Add test for stripping http:// and https:// from URL parameter
     //TODO: Add test for missing url exception
+    //TODO: Modify addVersion test
+    //TODO: Add test for urlManager function
 }
