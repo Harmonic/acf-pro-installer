@@ -24,7 +24,7 @@ It reads your :key: WP Migrate DB Pro key and site URL from the **environment** 
       "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-latest.zip"
     },
     "require": {
-      "harmonic/wp-migrate-db-pro": "^1.0",
+      "harmonic/wp-migrate-db-pro-installer": "^1.0",
       "composer/installers": "^1.0"
     }
   }
@@ -48,7 +48,7 @@ If you also require the media files and cli plugins you can add these as well:
       "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-media-files-latest.zip"
     },
     "require": {
-      "harmonic/wp-migrate-db-pro": "^1.0",
+      "harmonic/wp-migrate-db-pro-installer": "^1.0",
       "composer/installers": "^1.0"
     }
   }
@@ -64,7 +64,7 @@ If you also require the media files and cli plugins you can add these as well:
       "url": "https://deliciousbrains.com/dl/wp-migrate-db-pro-cli-latest.zip"
     },
     "require": {
-      "harmonic/wp-migrate-db-pro": "^1.0",
+      "harmonic/wp-migrate-db-pro-installer": "^1.0",
       "composer/installers": "^1.0"
     }
   }
